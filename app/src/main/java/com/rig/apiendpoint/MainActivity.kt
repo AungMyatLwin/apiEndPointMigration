@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.rig.apiendpoint.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,19 +22,20 @@ class MainActivity : AppCompatActivity() {
         viewModel.getAllEntries()
 
         viewModel.datas.observe(this, Observer {
-            recyclerAdapter=RecyclerAdapter(it.entries)
-            binding.recyclerView.apply {
-                adapter = recyclerAdapter
-                layoutManager = LinearLayoutManager(this@MainActivity)
-            }
+//            recyclerAdapter=RecyclerAdapter(it.entries)
+//            binding.recyclerView.apply {
+//                adapter = recyclerAdapter
+//                layoutManager = LinearLayoutManager(this@MainActivity)
+//            }
             Log.d("Datas", "onCreate: ${it.entries}")
+            binding.recyclerView.setContent {
+                ReuseLazyColum(it.entries)
+            }
         })
 
         viewModel.random.observe(this, Observer{
-            recyclerAdapter=RecyclerAdapter(it.entries)
-            binding.recyclerView.apply {
-                adapter = recyclerAdapter
-                layoutManager = LinearLayoutManager(this@MainActivity)
+            binding.recyclerView.setContent {
+                ReuseLazyColum(it.entries)
             }
             Log.d("Datas", "onCreate: ${it.entries}")
         })
